@@ -1,0 +1,71 @@
+{
+  "schema": "NEXUS_TRAINING_READINESS_GATES_V1",
+  "status": "NOT_READY_UNTIL_ALL_REQUIRED_PASS",
+  "gates": [
+    {
+      "id": "G0",
+      "name": "BASE_REVISION_PINNED",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G1",
+      "name": "M6_FROZEN_AND_HASHED",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G2",
+      "name": "TRAIN_VALIDATION_M6_SEPARATION_PROVED",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G3",
+      "name": "GOLD_DATASET_MANIFEST_SHA",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G4",
+      "name": "BASELINE_RECORDED",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G5",
+      "name": "RESOURCE_FEASIBILITY",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G6",
+      "name": "ROLLBACK_CHECKPOINT",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G7",
+      "name": "REDTEAM_PRETRAIN_PASS",
+      "required": true,
+      "status": "PENDING"
+    },
+    {
+      "id": "G8",
+      "name": "AFAH_PRETRAIN_SCOPE_ACCEPTANCE",
+      "required": true,
+      "status": "PENDING"
+    }
+  ],
+  "train_authorization": "ALL_REQUIRED_GATES_PASS",
+  "neural_learning_proof": [
+    "weights_changed=true OR adapter_changed=true",
+    "weights_or_adapter_sha256",
+    "training_config_sha256",
+    "dataset_sha256",
+    "posttrain_m6",
+    "transfer_test",
+    "regression_test",
+    "reproduction"
+  ]
+}
