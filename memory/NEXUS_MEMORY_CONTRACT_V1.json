@@ -1,0 +1,34 @@
+{
+  "schema": "NEXUS_MEMORY_CONTRACT_V1",
+  "status": "SCAFFOLDED_UNDER_TEST",
+  "classes": {
+    "M0": "EPHEMERAL",
+    "M1": "TRACE",
+    "M2": "REPLAY",
+    "M3": "WARM",
+    "M4": "GOLD",
+    "M5": "MODEL_ADAPTER",
+    "M6": "COLD_BENCHMARK_SEALED",
+    "M7": "EVIDENCE"
+  },
+  "write_gate": [
+    "SHA256",
+    "PROVENANCE",
+    "DEDUP",
+    "MEMORY_CLASS",
+    "AUDIT_STATUS",
+    "NO_SECRET"
+  ],
+  "training_allowed": [
+    "M4_GOLD",
+    "M2_REPLAY_IF_PROMOTED",
+    "M7_EVIDENCE_METADATA"
+  ],
+  "training_forbidden": [
+    "M6_COLD_BENCHMARK",
+    "RAW_AGORA",
+    "UNVERIFIED_EXTERNAL",
+    "SECRETS"
+  ],
+  "contamination_rule": "M6_CONTENT_OR_PARAPHRASE_MUST_NOT_ENTER_TRAINING"
+}
