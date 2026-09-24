@@ -1,0 +1,31 @@
+{
+  "schema": "NEXUS_BENCHMARK_V1",
+  "status": "FROZEN_TEMPLATE_NO_RESULTS",
+  "role": "knowledge-connection-ai-tool-orchestration",
+  "domains": [
+    "entity_linking",
+    "dependency_tracking",
+    "tool_routing",
+    "evidence_provenance",
+    "contradiction_routing",
+    "graph_retrieval"
+  ],
+  "m6_rule": "M6_NEVER_IN_TRAIN",
+  "modes": [
+    "BASE_MODEL_ALONE",
+    "NEXUS_PRETRAIN_SCAFFOLD",
+    "NEXUS_TRAINED",
+    "NEXUS_PLUS_MINIMAL_COALITION"
+  ],
+  "metrics": [
+    "accuracy",
+    "critical_error_rate",
+    "calibration",
+    "transfer",
+    "regression",
+    "routing_precision",
+    "provenance_completeness",
+    "latency"
+  ],
+  "result_status": "NO_EXECUTED_BASELINE_YET"
+}
