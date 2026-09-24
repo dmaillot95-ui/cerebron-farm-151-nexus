@@ -1,0 +1,53 @@
+{
+  "schema": "NEXUS_ARCHITECTURE_V1",
+  "farm_id": 151,
+  "name": "NEXUS",
+  "status": "SCAFFOLDED_NOT_TRAINED",
+  "domain": "native-knowledge-orchestration",
+  "role": "knowledge-connection-ai-tool-orchestration",
+  "mission": "Connect knowledge, models, tools, farms, evidence and dependencies into a traceable graph without replacing CÉRÉBRON executive decisions.",
+  "shared_base_family": "ELYSION_ELYSIUM_SHARED_BASE",
+  "runtime_changed": false,
+  "layers": [
+    {
+      "id": "L0",
+      "name": "BASE_MODEL"
+    },
+    {
+      "id": "L1",
+      "name": "NEXUS_CORE"
+    },
+    {
+      "id": "L2",
+      "name": "ADAPTERS"
+    },
+    {
+      "id": "L3",
+      "name": "MEMORY_GRAPH_INTERFACE"
+    },
+    {
+      "id": "L4",
+      "name": "PI_SEARCH_INTERFACE"
+    },
+    {
+      "id": "L5",
+      "name": "KNOWLEDGE_TOOL_FARM_GRAPH"
+    },
+    {
+      "id": "L6",
+      "name": "CEREBRON_EXECUTIVE_BOUNDARY"
+    },
+    {
+      "id": "L7",
+      "name": "AFAH_REDTEAM"
+    }
+  ],
+  "rules": [
+    "REALITY>COHERENCE",
+    "EVIDENCE>CONFIDENCE",
+    "CLAIM<=EVIDENCE",
+    "NEXUS_CONNECTS_CEREBRON_DECIDES",
+    "M6_NEVER_IN_TRAIN",
+    "RUNTIME_FREEZE"
+  ]
+}
