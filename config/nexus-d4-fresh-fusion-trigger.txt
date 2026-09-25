@@ -1,0 +1,7 @@
+NEXUS D4 FRESH DUAL CORE FUSION CANARY V1
+authorization_source_run=36146455180
+oracle_gain_over_best_single=4
+holdout=fresh_synthetic_not_m6_derived
+fusion_policy=frozen
+training=false
+weights_changed=false
