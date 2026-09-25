@@ -1,0 +1,140 @@
+name: NEXUS D2 Exact Runtime Pair
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/nexus-d2-runtime-trigger.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  runtime:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: qwen3-4b
+            model_id: Qwen/Qwen3-4B
+            revision: 1cfa9a7208912126459214e8b04321603b3df60c
+          - slug: smollm3-3b
+            model_id: HuggingFaceTB/SmolLM3-3B
+            revision: a07cc9a04f16550a088caea529712d1d335b0ac1
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install CPU runtime
+        run: |
+          python -m pip install --quiet --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --quiet --no-cache-dir "transformers>=4.53,<5" accelerate safetensors sentencepiece huggingface_hub
+      - name: Execute exact revision canary
+        env:
+          MODEL_ID: ${{ matrix.model_id }}
+          MODEL_REVISION: ${{ matrix.revision }}
+          MODEL_SLUG: ${{ matrix.slug }}
+        run: |
+          mkdir -p receipts/d2
+          python - <<'PY'
+          import hashlib,json,os,pathlib,resource,time,torch
+          from huggingface_hub import HfApi
+          from transformers import AutoTokenizer,AutoModelForCausalLM
+          mid=os.environ["MODEL_ID"]; rev=os.environ["MODEL_REVISION"]; slug=os.environ["MODEL_SLUG"]
+          info=HfApi().model_info(mid,revision=rev)
+          if info.sha!=rev: raise SystemExit("REVISION_MISMATCH")
+          tok=AutoTokenizer.from_pretrained(mid,revision=rev)
+          if tok.pad_token_id is None: tok.pad_token_id=tok.eos_token_id
+          model=AutoModelForCausalLM.from_pretrained(mid,revision=rev,torch_dtype=torch.bfloat16,low_cpu_mem_usage=True)
+          model.eval()
+          messages=[
+            {"role":"system","content":"You are NEXUS. This is a runtime identity canary only. Answer only PASS or FAIL. /no_think"},
+            {"role":"user","content":"Claim: 2+2=4. Evidence: direct arithmetic identity. Verdict?"}
+          ]
+          try:
+            prompt=tok.apply_chat_template(messages,tokenize=False,add_generation_prompt=True,enable_thinking=False)
+          except TypeError:
+            prompt=tok.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
+          x=tok(prompt,return_tensors="pt")
+          t0=time.time()
+          with torch.inference_mode():
+            y=model.generate(**x,max_new_tokens=4,do_sample=False,pad_token_id=tok.pad_token_id,eos_token_id=tok.eos_token_id)
+          out=tok.decode(y[0][x["input_ids"].shape[-1]:],skip_special_tokens=True).strip()
+          if not out: raise SystemExit("EMPTY_OUTPUT")
+          receipt={
+            "schema":"NEXUS_D2_EXACT_RUNTIME_RECEIPT_V1",
+            "run_id":int(os.environ["GITHUB_RUN_ID"]),
+            "model_id":mid,"revision":rev,"revision_verified":True,
+            "real_inference":True,"weights_changed":False,
+            "prompt_sha256":hashlib.sha256(messages[1]["content"].encode()).hexdigest(),
+            "output_sha256":hashlib.sha256(out.encode()).hexdigest(),
+            "output_nonempty":True,
+            "elapsed_s":round(time.time()-t0,3),
+            "max_rss_kb":resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+            "claim_ceiling":"EXACT_REVISION_RUNTIME_CANARY_ONLY"
+          }
+          receipt["receipt_sha256"]=hashlib.sha256(json.dumps(receipt,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+          pathlib.Path(f"receipts/d2/{slug}.json").write_text(json.dumps(receipt,indent=2)+"\n")
+          print(json.dumps(receipt,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nexus-d2-${{ matrix.slug }}
+          path: receipts/d2/${{ matrix.slug }}.json
+          if-no-files-found: error
+
+  audit:
+    needs: runtime
+    if: always() && needs.runtime.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nexus-d2-*
+          path: downloaded
+          merge-multiple: true
+      - name: Audit pair
+        run: |
+          mkdir -p receipts/d2
+          python - <<'PY'
+          import glob,hashlib,json,pathlib,shutil,os
+          files=glob.glob("downloaded/*.json")
+          rows=[json.load(open(p)) for p in files]
+          expected={
+            ("Qwen/Qwen3-4B","1cfa9a7208912126459214e8b04321603b3df60c"),
+            ("HuggingFaceTB/SmolLM3-3B","a07cc9a04f16550a088caea529712d1d335b0ac1")
+          }
+          got={(r["model_id"],r["revision"]) for r in rows}
+          assert got==expected,(got,expected)
+          assert len(rows)==2 and all(r["real_inference"] and r["revision_verified"] and r["output_nonempty"] for r in rows)
+          out={
+            "schema":"NEXUS_D2_EXACT_RUNTIME_PAIR_AUDIT_V1",
+            "run_id":int(os.environ["GITHUB_RUN_ID"]),
+            "status":"PASS",
+            "pair_count":2,
+            "models":sorted([{"model_id":r["model_id"],"revision":r["revision"],"receipt_sha256":r["receipt_sha256"]} for r in rows],key=lambda x:x["model_id"]),
+            "independent_evidence_count":0,
+            "two_models_not_two_independent_proofs":True,
+            "claim_ceiling":"TWO_EXACT_REVISION_RUNTIME_RECEIPTS_PASS_NO_DUAL_CORE_GAIN_CLAIM"
+          }
+          out["audit_sha256"]=hashlib.sha256(json.dumps(out,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+          pathlib.Path("receipts/d2/nexus-d2-runtime-pair-audit.json").write_text(json.dumps(out,indent=2)+"\n")
+          for p in files:
+            shutil.copy2(p,pathlib.Path("receipts/d2")/pathlib.Path(p).name)
+          print(json.dumps(out,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nexus-d2-runtime-pair-audit
+          path: receipts/d2/
+      - name: Persist receipts
+        run: |
+          git config user.name cerebron-bot
+          git config user.email actions@users.noreply.github.com
+          git add receipts/d2/
+          git diff --cached --quiet && exit 0
+          git commit -m "receipt: NEXUS D2 exact runtime pair ${{ github.run_id }}"
+          git pull --rebase origin main
+          git push
