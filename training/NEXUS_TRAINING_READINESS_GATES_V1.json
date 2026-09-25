@@ -44,13 +44,11 @@
       "id": "G4",
       "name": "BASELINE_RECORDED",
       "required": true,
-      "status": "PASS",
+      "status": "COMPLEMENTARITY_PASS_FUSION_CANARY_READY",
       "evidence": {
-        "run_id": 36138864930,
-        "audit_sha256": "0b403c263eafd2eaaf57398f6afd9bf445aace5f09f15276944c1e04fe32a356",
-        "best_single_model": "Qwen/Qwen3-4B",
-        "best_single_accuracy": 0.7222222222222222,
-        "selection_decision": "NO_DUAL_CORE_PROMOTION_FROM_D3_ALONE"
+        "run_id": 36146455180,
+        "oracle_gain_over_best_single": 4,
+        "receipt_sha256": "4bb615dc7ae684b423cf955be5693dd92d7774132d8b09f9f22fb9889b77df99"
       }
     },
     {
