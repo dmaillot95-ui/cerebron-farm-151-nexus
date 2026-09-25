@@ -1,0 +1,16 @@
+{
+  "schema": "NEXUS_D2_EXACT_RUNTIME_RECEIPT_V1",
+  "run_id": 36138369400,
+  "model_id": "HuggingFaceTB/SmolLM3-3B",
+  "revision": "a07cc9a04f16550a088caea529712d1d335b0ac1",
+  "revision_verified": true,
+  "real_inference": true,
+  "weights_changed": false,
+  "prompt_sha256": "63e95cc3631c63ff541ef547e45785742cf3d1da2322bf72054e0e5fd50cd9dd",
+  "output_sha256": "80ea7a2303bf267536c5ab6a5fb33e321b5707464bfcdc3f3f667a3c30a2d5e8",
+  "output_nonempty": true,
+  "elapsed_s": 9.801,
+  "max_rss_kb": 6708440,
+  "claim_ceiling": "EXACT_REVISION_RUNTIME_CANARY_ONLY",
+  "receipt_sha256": "fd9bcc1eba90d7ba3206a09e6794b47c8cdd1ac9c7668ffe505509cd214e8ebf"
+}

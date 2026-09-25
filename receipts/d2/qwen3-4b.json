@@ -1,0 +1,16 @@
+{
+  "schema": "NEXUS_D2_EXACT_RUNTIME_RECEIPT_V1",
+  "run_id": 36138369400,
+  "model_id": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "revision_verified": true,
+  "real_inference": true,
+  "weights_changed": false,
+  "prompt_sha256": "63e95cc3631c63ff541ef547e45785742cf3d1da2322bf72054e0e5fd50cd9dd",
+  "output_sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8",
+  "output_nonempty": true,
+  "elapsed_s": 8.08,
+  "max_rss_kb": 8667432,
+  "claim_ceiling": "EXACT_REVISION_RUNTIME_CANARY_ONLY",
+  "receipt_sha256": "26258c7872277bdb6a83e50907ea9eac0b5e1603f034167805387e20eb91bf72"
+}
