@@ -44,13 +44,13 @@
       "id": "G4",
       "name": "BASELINE_RECORDED",
       "required": true,
-      "status": "BASELINES_COMPLETE_AUDIT_QUEUED",
+      "status": "PASS",
       "evidence": {
         "run_id": 36138864930,
-        "qwen_correct": 52,
-        "smol_correct": 48,
-        "audit_job_id": 108099162015,
-        "claim_ceiling": "PRELIMINARY_BASELINES_ONLY_NOT_D3_PASS"
+        "audit_sha256": "0b403c263eafd2eaaf57398f6afd9bf445aace5f09f15276944c1e04fe32a356",
+        "best_single_model": "Qwen/Qwen3-4B",
+        "best_single_accuracy": 0.7222222222222222,
+        "selection_decision": "NO_DUAL_CORE_PROMOTION_FROM_D3_ALONE"
       }
     },
     {
