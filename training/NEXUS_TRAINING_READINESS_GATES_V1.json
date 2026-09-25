@@ -44,10 +44,13 @@
       "id": "G4",
       "name": "BASELINE_RECORDED",
       "required": true,
-      "status": "IN_PROGRESS_D3_PRIVATE_M6_V2",
+      "status": "BASELINES_COMPLETE_AUDIT_QUEUED",
       "evidence": {
         "run_id": 36138864930,
-        "orchestrator_repo": "dmaillot95-ui/cerebron-omega-ai"
+        "qwen_correct": 52,
+        "smol_correct": 48,
+        "audit_job_id": 108099162015,
+        "claim_ceiling": "PRELIMINARY_BASELINES_ONLY_NOT_D3_PASS"
       }
     },
     {
