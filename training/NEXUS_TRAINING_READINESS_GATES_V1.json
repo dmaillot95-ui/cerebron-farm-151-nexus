@@ -6,13 +6,27 @@
       "id": "G0",
       "name": "BASE_REVISION_PINNED",
       "required": true,
-      "status": "PENDING"
+      "status": "PASS",
+      "evidence": {
+        "d2_run_id": 36138369400,
+        "d2_audit_sha256": "d76c65abf109ec4d629dd63790ae66e15eb83866be1be4699b3e3af3c0d2a4fc",
+        "model_a": "Qwen/Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c",
+        "model_b": "HuggingFaceTB/SmolLM3-3B@a07cc9a04f16550a088caea529712d1d335b0ac1"
+      }
     },
     {
       "id": "G1",
       "name": "M6_FROZEN_AND_HASHED",
       "required": true,
-      "status": "PENDING"
+      "status": "PASS_EXTERNAL_PRIVATE_M6_V2",
+      "evidence": {
+        "orchestrator_repo": "dmaillot95-ui/cerebron-omega-ai",
+        "m6_run_id": 36138516577,
+        "m6_sha256": "358eb84c10b5e6555cf99342f0086c3185274219991ece6de10132844b57b717",
+        "m6_receipt_sha256": "53e7041ed96f4e44d4bc5b4df6e168ef38a79d29923eb6a30f36777622ee9023",
+        "exact_prompts_public": false,
+        "deny_training": true
+      }
     },
     {
       "id": "G2",
@@ -30,7 +44,7 @@
       "id": "G4",
       "name": "BASELINE_RECORDED",
       "required": true,
-      "status": "PENDING"
+      "status": "READY_FOR_D3_PRIVATE_BASELINE"
     },
     {
       "id": "G5",
