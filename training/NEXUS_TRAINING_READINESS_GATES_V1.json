@@ -86,5 +86,18 @@
     "transfer_test",
     "regression_test",
     "reproduction"
-  ]
+  ],
+  "d4_fusion_dev": {
+    "run_id": 36155230931,
+    "receipt_sha256": "0c87630d9ac9f88c7e87e4bac930e96f122c4af7ca7c38baa220be0077be99e1",
+    "classification": "DEV_POLICY_TUNING_NOT_COLD",
+    "qwen_correct": 22,
+    "smol_correct": 16,
+    "best_single_correct": 22,
+    "best_policy_correct": 22,
+    "gain_over_best_single": 0,
+    "selected_policy": "RECIPROCAL_ELSE_QWEN",
+    "decision": "DEV_POLICY_HOLD_NO_ROBUST_GAIN",
+    "fresh_holdout_consumed": false
+  }
 }
