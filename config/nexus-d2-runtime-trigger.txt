@@ -1,0 +1,6 @@
+NEXUS D2 EXACT RUNTIME PAIR
+model_a=Qwen/Qwen3-4B@1cfa9a7208912126459214e8b04321603b3df60c
+model_b=HuggingFaceTB/SmolLM3-3B@a07cc9a04f16550a088caea529712d1d335b0ac1
+purpose=EXACT_REVISION_RUNTIME_PROOF
+training=NONE
+weights_changed=false
