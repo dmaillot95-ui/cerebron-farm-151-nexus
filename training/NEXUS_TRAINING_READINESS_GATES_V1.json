@@ -46,7 +46,8 @@
       "required": true,
       "status": "IN_PROGRESS_D3_PRIVATE_M6_V2",
       "evidence": {
-        "run_id": 36138864930
+        "run_id": 36138864930,
+        "orchestrator_repo": "dmaillot95-ui/cerebron-omega-ai"
       }
     },
     {
