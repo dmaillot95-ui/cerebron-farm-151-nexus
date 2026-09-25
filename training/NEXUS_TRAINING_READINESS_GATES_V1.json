@@ -44,7 +44,10 @@
       "id": "G4",
       "name": "BASELINE_RECORDED",
       "required": true,
-      "status": "READY_FOR_D3_PRIVATE_BASELINE"
+      "status": "IN_PROGRESS_D3_PRIVATE_M6_V2",
+      "evidence": {
+        "run_id": 36138864930
+      }
     },
     {
       "id": "G5",
